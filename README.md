@@ -3,7 +3,7 @@
 SuperPOS Pro is a modern, high-performance Point of Sale (POS) and Retail Management System built for the web. Designed with a sleek user interface and robust backend architecture, it provides an end-to-end solution for inventory management, dynamic sales processing, and financial tracking.
 
 ## 🚀 Live Demo
-*(Add your Vercel live link here!)*
+https://smarttrolleyapp.vercel.app
 
 ## ✨ Key Features
 
