@@ -25,11 +25,9 @@ https://smarttrolleyapp.vercel.app
 
 ## 📸 Screenshots
 
-*(Take some screenshots of your app running and add them to your repository, then link them here!)*
-
-| POS Terminal | Admin Dashboard |
+| Login Screen | POS Terminal |
 | --- | --- |
-| ![POS Terminal Placeholder](https://via.placeholder.com/600x400?text=POS+Terminal) | ![Admin Dashboard Placeholder](https://via.placeholder.com/600x400?text=Admin+Dashboard) |
+| ![Login Screen](public/screenshots/login.png) | ![POS Terminal](public/screenshots/pos.png) |
 
 ## ⚙️ Local Development Setup
 
