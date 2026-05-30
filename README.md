@@ -27,7 +27,7 @@ https://smarttrolleyapp.vercel.app
 
 | Login Screen | POS Terminal |
 | --- | --- |
-| ![Login Screen](public/screenshots/login.png) | ![POS Terminal](public/screenshots/pos.png) |
+| ![Login Screen](public/screenshots/login-screen.png) | ![POS Terminal](public/screenshots/pos-terminal.png) |
 
 ## ⚙️ Local Development Setup
 
