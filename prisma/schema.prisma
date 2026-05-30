@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  pin       String   @unique
+  role      String   // "ADMIN" or "WORKER"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  transactions Transaction[]
+}
+
+model Product {
+  id        String   @id @default(uuid())
+  barcode   String   @unique
+  name      String
+  price     Float
+  costPrice Float    @default(0)
+  stock     Int      @default(0)
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  transactionItems TransactionItem[]
+}
+
+model Transaction {
+  id            String   @id @default(uuid())
+  totalAmount   Float
+  paymentMode   String   // "CASH", "UPI", "CARD"
+  cashierId     String
+  cashier       User     @relation(fields: [cashierId], references: [id])
+  createdAt     DateTime @default(now())
+  items         TransactionItem[]
+}
+
+model TransactionItem {
+  id            String   @id @default(uuid())
+  transactionId String
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  productBarcode String
+  product       Product     @relation(fields: [productBarcode], references: [barcode])
+  quantity      Int
+  price         Float       // Price at the time of purchase
+  costPrice     Float       @default(0) // Cost at the time of purchase
+}
