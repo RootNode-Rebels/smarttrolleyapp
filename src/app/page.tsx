@@ -111,10 +111,6 @@ export default function LoginPage() {
             )}
           </button>
           
-          <div className="text-center text-xs text-slate-500">
-            <p>Admin: admin / password123</p>
-            <p>Worker: worker / password123</p>
-          </div>
         </form>
       </motion.div>
     </div>
