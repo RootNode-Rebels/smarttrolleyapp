@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SuperPOS Pro 🛒
 
-## Getting Started
+SuperPOS Pro is a modern, high-performance Point of Sale (POS) and Retail Management System built for the web. Designed with a sleek user interface and robust backend architecture, it provides an end-to-end solution for inventory management, dynamic sales processing, and financial tracking.
 
-First, run the development server:
+## 🚀 Live Demo
+*(Add your Vercel live link here!)*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Key Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Dynamic POS Terminal:** Lightning-fast checkout process with barcode scanning support and dynamic bill generation.
+- **Secure Authentication:** Role-based access control (Admin vs. Worker) with fully encrypted passwords using `bcrypt`.
+- **UPI QR Code Integration:** Automatically generates dynamic UPI QR codes for seamless cashless payments based on the total bill amount.
+- **Printable Receipts:** Beautifully formatted receipts ready for thermal or standard printing.
+- **Inventory Management:** Full CRUD capabilities for products, including real-time stock tracking and cost-price analysis.
+- **Finance Dashboard:** Comprehensive analytics tracking total revenue, gross profit, and tax collection.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend:** Next.js 14, React, TailwindCSS, Framer Motion
+- **Backend:** Next.js Server Actions
+- **Database:** PostgreSQL (Hosted on Supabase)
+- **ORM:** Prisma
+- **Authentication:** Custom JWT-style cookie sessions with bcrypt encryption
+- **Icons & UI:** Lucide React, Custom CSS Tokens
 
-## Learn More
+## 📸 Screenshots
 
-To learn more about Next.js, take a look at the following resources:
+*(Take some screenshots of your app running and add them to your repository, then link them here!)*
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| POS Terminal | Admin Dashboard |
+| --- | --- |
+| ![POS Terminal Placeholder](https://via.placeholder.com/600x400?text=POS+Terminal) | ![Admin Dashboard Placeholder](https://via.placeholder.com/600x400?text=Admin+Dashboard) |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ⚙️ Local Development Setup
 
-## Deploy on Vercel
+If you want to run this project locally on your machine:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/developeradhi/smarttrolleyapp.git
+   cd smarttrolleyapp
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Set up Environment Variables:**
+   Create a `.env` file in the root directory and add your Supabase connection strings:
+   ```env
+   DATABASE_URL="your-supabase-connection-string"
+   DIRECT_URL="your-supabase-connection-string"
+   ```
+
+4. **Run Database Migrations & Seed:**
+   ```bash
+   npx prisma db push
+   npx prisma db seed
+   ```
+
+5. **Start the Development Server:**
+   ```bash
+   npm run dev
+   ```
+
+## 👨‍💻 Author
+
+**Adhi**
+- GitHub: [@developeradhi](https://github.com/developeradhi)
+- Portfolio: *(Add your portfolio link here)*
