@@ -9,10 +9,11 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
   name      String
-  pin       String   @unique
-  role      String   // "ADMIN" or "WORKER"
+  role      String   // 'ADMIN' or 'WORKER'
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   transactions Transaction[]

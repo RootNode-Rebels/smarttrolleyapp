@@ -3,19 +3,23 @@
 import { prisma } from '@/lib/prisma'
 import { cookies } from 'next/headers'
 
-export async function loginWithPin(pin: string) {
+import bcrypt from 'bcryptjs'
+
+export async function loginWithCredentials(username: string, passwordString: string) {
   const user = await prisma.user.findUnique({
-    where: { pin },
+    where: { username },
   })
 
   if (user) {
-    // Set a simple cookie for authentication (not secure for real production, but works for local POS)
-    const cookieStore = await cookies()
-    cookieStore.set('auth_token', user.id, { httpOnly: true, path: '/' })
-    return { success: true, role: user.role, name: user.name }
+    const isValid = await bcrypt.compare(passwordString, user.password)
+    if (isValid) {
+      const cookieStore = await cookies()
+      cookieStore.set('auth_token', user.id, { httpOnly: true, path: '/' })
+      return { success: true, role: user.role, name: user.name }
+    }
   }
 
-  return { success: false, error: 'Invalid PIN' }
+  return { success: false, error: 'Invalid username or password' }
 }
 
 export async function logout() {
@@ -69,6 +73,9 @@ export async function lookupProduct(barcode: string) {
 }
 
 export async function getInventory() {
+  const user = await getCurrentUser()
+  if (!user || user.role !== 'ADMIN') throw new Error("Unauthorized")
+
   return await prisma.product.findMany({
     orderBy: { name: 'asc' },
   })
@@ -118,6 +125,9 @@ export async function processTransaction(items: { barcode: string; qty: number }
 }
 
 export async function addProduct(data: { barcode: string, name: string, price: number, costPrice: number, stock: number }) {
+  const user = await getCurrentUser()
+  if (!user || user.role !== 'ADMIN') throw new Error("Unauthorized")
+
   return await prisma.product.upsert({
     where: { barcode: data.barcode },
     update: data,
@@ -126,12 +136,18 @@ export async function addProduct(data: { barcode: string, name: string, price: n
 }
 
 export async function deleteProduct(barcode: string) {
+  const user = await getCurrentUser()
+  if (!user || user.role !== 'ADMIN') throw new Error("Unauthorized")
+
   return await prisma.product.delete({
     where: { barcode }
   })
 }
 
 export async function getFinanceData() {
+  const user = await getCurrentUser()
+  if (!user || user.role !== 'ADMIN') throw new Error("Unauthorized")
+
   const transactions = await prisma.transaction.findMany({
     include: { items: true },
     orderBy: { createdAt: 'desc' }
@@ -166,4 +182,39 @@ export async function getFinanceData() {
       grossProfit
     }
   }
+}
+
+export async function getUsers() {
+  const user = await getCurrentUser()
+  if (!user || user.role !== 'ADMIN') throw new Error("Unauthorized")
+
+  return await prisma.user.findMany({
+    orderBy: { createdAt: 'desc' },
+    select: { id: true, username: true, name: true, role: true, createdAt: true }
+  })
+}
+
+export async function createUser(data: { name: string, username: string, passwordString: string, role: string }) {
+  const user = await getCurrentUser()
+  if (!user || user.role !== 'ADMIN') throw new Error("Unauthorized")
+
+  const hashedPassword = await bcrypt.hash(data.passwordString, 10)
+  
+  return await prisma.user.create({
+    data: {
+      name: data.name,
+      username: data.username,
+      password: hashedPassword,
+      role: data.role
+    }
+  })
+}
+
+export async function deleteUser(id: string) {
+  const user = await getCurrentUser()
+  if (!user || user.role !== 'ADMIN') throw new Error("Unauthorized")
+
+  return await prisma.user.delete({
+    where: { id }
+  })
 }

@@ -3,7 +3,7 @@
 import { ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LogOut, PackageSearch, History, MonitorSmartphone } from 'lucide-react'
+import { LogOut, PackageSearch, History, MonitorSmartphone, Users } from 'lucide-react'
 import { logout } from '@/lib/actions'
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
@@ -18,6 +18,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const navItems = [
     { href: '/admin', icon: PackageSearch, label: 'Inventory Manager' },
     { href: '/admin/finance', icon: History, label: 'Finance & Sales' },
+    { href: '/admin/users', icon: Users, label: 'Staff & Roles' },
     { href: '/pos', icon: MonitorSmartphone, label: 'Switch to POS' },
   ]
 
