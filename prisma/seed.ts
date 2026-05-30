@@ -4,29 +4,20 @@ import bcrypt from 'bcryptjs'
 const prisma = new PrismaClient()
 
 async function main() {
-  const hashedPassword = await bcrypt.hash('password123', 10)
-
-  // Create Admin User
-  const admin = await prisma.user.upsert({
-    where: { username: 'admin' },
-    update: {},
-    create: {
-      name: 'Admin',
-      username: 'admin',
-      password: hashedPassword,
-      role: 'ADMIN',
-    },
-  })
+  const adminUsername = process.env.ADMIN_USERNAME || 'admin'
+  const adminPassword = process.env.ADMIN_PASSWORD || 'password123'
   
-  // Create Worker User
-  const worker = await prisma.user.upsert({
-    where: { username: 'worker' },
+  const hashedAdminPassword = await bcrypt.hash(adminPassword, 10)
+
+  // Create initial admin user securely
+  await prisma.user.upsert({
+    where: { username: adminUsername },
     update: {},
     create: {
-      name: 'Adhi (Worker)',
-      username: 'worker',
-      password: hashedPassword,
-      role: 'WORKER',
+      username: adminUsername,
+      password: hashedAdminPassword,
+      name: 'Super Admin',
+      role: 'ADMIN',
     },
   })
 
